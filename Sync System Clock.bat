@@ -4,3 +4,4 @@ w32tm /config /syncfromflags:manual /manualpeerlist:time.windows.com
 w32tm /config /reliable:yes
 w32tm /config /update
 net start w32time
+w32tm /resync
