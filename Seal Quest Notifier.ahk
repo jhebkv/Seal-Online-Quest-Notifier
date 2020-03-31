@@ -1,7 +1,7 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #NoTrayIcon
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-version="1.0"
+version="1.1"
 questini=%A_ScriptDir%\QuestTime.ini
 IniRead,ql,%questini%,Quest,Lists
 Gui,Add,Text,xm w65 h15,Quest Item
@@ -11,7 +11,9 @@ Gui,Add,Text,xm w65 h15,Notify on
 Gui,Add,Text,x+p,:
 Gui,Add,Edit,x+m w120 vTime_ gTime_ +number
 Gui,Add,Button,x+m w70 gSubmit vSubmit,Start Timer
-Gui,Add,Text,xm vTimer w200
+Gui,Add,Text,xm vNow,%A_Hour%:%A_Min%:%A_Sec%
+Gui,Add,Text,x+m,|
+Gui,Add,Text,x+m vTimer w60
 Gui,Show,w300 h80,Seal Online Quest Timer
 goto Quest
 return
@@ -39,20 +41,21 @@ else {
 	GuiControl,,Submit,Start Timer
 	Gui,-AlwaysOnTop
 }
-SetTimer,Timer,100
+SetTimer,Timer,10
 return
 
 Timer:
 Temp:=getQuestTime(Timer)
-sleep 100
+sleep 10
 GuiControl,,Timer,Timer : %Temp%
+GuiControl,,Now,%A_Hour%:%A_Min%:%A_Sec%
 if (Temp=5) {
 	SoundPlay,%a_scriptdir%\audio\Countdown.mp3
-	Sleep 1000
+	Sleep 1010
 }
 if getTimerStat()=0
 	SetTimer,Timer,Off
-sleep 100
+sleep 10
 return
 
 GuiEscape:
